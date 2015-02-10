@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.dnastack</groupId>
+    <artifactId>BeaconizeVariant</artifactId>
+    <version>1.0</version>
+    <packaging>war</packaging>
+    <name>BeaconizeVariant</name>
+
+    <organization>
+        <name>DNAstack</name>
+        <url>http://dnastack.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>mfiume</id>
+            <name>Marc Fiume</name>
+            <email>marc@dnastack.com</email>
+            <url>https://github.com/mfiume</url>
+            <organization>DNAstack</organization>
+            <organizationUrl>http://dnastack.com</organizationUrl>
+            <roles>
+                <role>Developer, CEO</role>
+            </roles>
+        </developer>
+        
+        <developer>
+            <id>jim</id>
+            <name>Jim Vlasblom</name>
+            <email>jim@dnastack.com</email>
+            <url>https://github.com/jvlasblom</url>
+            <organization>DNAstack</organization>
+            <organizationUrl>http://dnastack.com</organizationUrl>
+            <roles>
+                <role>Developer, CTO</role>
+            </roles>
+        </developer>  
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.wildfly>8.1.0.Final</version.wildfly>
+        <version.jboss-jaxrs>1.0.0.Alpha1</version.jboss-jaxrs>
+        <version.wildfly.plugin>1.0.2.Final</version.wildfly.plugin>
+        <version.compiler.plugin>3.0</version.compiler.plugin>
+        <version.war.plugin>2.1.1</version.war.plugin>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>jboss-javaee-7.0-with-all</artifactId>
+                <version>${version.wildfly}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.spec.javax.ws.rs</groupId>
+                <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
+                <scope>provided</scope>
+                <version>${version.jboss-jaxrs}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+            <type>jar</type>
+        </dependency>
+        
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${version.war.plugin}</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.plugin}</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.compiler.plugin}</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
