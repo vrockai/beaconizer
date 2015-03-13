@@ -22,37 +22,38 @@ import javax.ws.rs.core.UriInfo;
  */
 @Path("/")
 public class BeaconizeVariantController {
-    
-    // API Key for webdev.dnastack.com (on DAIR machine)
+
     private static final String API_KEY = "AIzaSyCQsNqWNQgAPmQFk6C9LUMlZ1961gCK7qA";
-    
+
     private static final BeaconizeVariantImpl[] GABeacons = new BeaconizeVariantImpl[]{
-        new BeaconizeVariantImpl("platinum", "https://www.googleapis.com/genomics/v1beta", API_KEY, new String[]{"3049512673186936334"}),
-        new BeaconizeVariantImpl("thousandgenomes", "https://www.googleapis.com/genomics/v1beta", API_KEY, new String[]{"4252737135923902652"}),
-        new BeaconizeVariantImpl("thousandgenomes-phase3", "https://www.googleapis.com/genomics/v1beta", API_KEY, new String[]{"10473108253681171589"}),
+        new BeaconizeVariantImpl("platinum", "https://www.googleapis.com/genomics/v1beta2", API_KEY, new String[]{"3049512673186936334"}),
+        new BeaconizeVariantImpl("thousandgenomes", "https://www.googleapis.com/genomics/v1beta2", API_KEY, new String[]{"4252737135923902652"}),
+        new BeaconizeVariantImpl("thousandgenomes-phase3", "https://www.googleapis.com/genomics/v1beta2", API_KEY, new String[]{"10473108253681171589"}),
         new BeaconizeVariantImpl("curoverse", "http://lightning-dev4.curoverse.com/api", null, new String[]{"hu"}),
         new BeaconizeVariantImpl("curoverse-ref", "http://lightning-dev4.curoverse.com/apiref", null, new String[]{"1000g_2013"})
     };
-    
+
     /**
-     * 
+     *
      * Returns whether the variant exists in the Variant API Implementation with
      * name 'requestedName'. If no beacon with the name 'name' exists, returns 404 not
      * found.
-     * 
-     * @param requestedName - The name of the Variant API Implementation to query.
-     * @param populationId - The population Id
+     *
+     * @param requestedName    - The name of the Variant API Implementation to query.
+     * @param populationId     - The population Id
      * @param referenceVersion - The reference version
-     * @param chromosome - The chromosome of the variant to query
-     * @param coordinate - The coordinate of the variant to query.
-     * @param allele - The allele of the variant to query.
-     * 
-     * @return 404 not found if the requestedName is not found, otherwise a BeaconResponseDTO that records whether or not the variant exists.
-     */    
+     * @param chromosome       - The chromosome of the variant to query
+     * @param coordinate       - The coordinate of the variant to query.
+     * @param allele           - The allele of the variant to query.
+     *
+     * @return 404 not found if the requestedName is not found, otherwise a BeaconResponseDTO that records whether or
+     *         not the variant exists.
+     */
     @GET
     @Path("{name}")
     @Produces({"application/xml", "application/json"})
     public Response find(@Context UriInfo uriInfo, @PathParam("name") String requestedName, @QueryParam("populationId") String populationId, @QueryParam("referenceVersion") String referenceVersion, @QueryParam("chromosome") String chromosome, @QueryParam("coordinate") Long coordinate, @QueryParam("allele") String allele) {
+
         for (BeaconizeVariantImpl gaBeacon : GABeacons) {
             if (gaBeacon.getName().equals(requestedName)) {
                 if (gaBeacon.exists(null, chromosome, coordinate, allele)) {
@@ -71,13 +72,15 @@ public class BeaconizeVariantController {
     /**
      * Returns a list of beacon responses, one for each variant API implementation registered in the
      * GABeacons field.
-     * 
-     * @param populationId - The population Id
+     *
+     * @param populationId     - The population Id
      * @param referenceVersion - The reference version
-     * @param chromosome - The chromosome of the variant to query
-     * @param coordinate - The coordinate of the variant to query.
-     * @param allele - The allele of the variant to query.
-     * @return A list of all beacon responses, one for each Variant API implementation registered in the GABeacons field.
+     * @param chromosome       - The chromosome of the variant to query
+     * @param coordinate       - The coordinate of the variant to query.
+     * @param allele           - The allele of the variant to query.
+     *
+     * @return A list of all beacon responses, one for each Variant API implementation registered in the GABeacons
+     *         field.
      */
     @GET
     @Produces({"application/xml", "application/json"})

@@ -12,27 +12,28 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author jim
  */
-@XmlRootElement(name="BEACONResponse")
+@XmlRootElement(name = "BEACONResponse")
 public class BeaconResponseDTO {
+
     private String name;
     private Boolean exists;
     private Long alleleFreq;
-    
-    public BeaconResponseDTO(){ 
-        
+
+    public BeaconResponseDTO() {
+
     }
-    
-    public BeaconResponseDTO(String name, Boolean exists){
+
+    public BeaconResponseDTO(String name, Boolean exists) {
         this.exists = exists;
         this.alleleFreq = null;
     }
-    
-    public BeaconResponseDTO(String name, Boolean exists, Long alleleFreq){
+
+    public BeaconResponseDTO(String name, Boolean exists, Long alleleFreq) {
         this.exists = exists;
-        this.alleleFreq = alleleFreq;              
+        this.alleleFreq = alleleFreq;
     }
 
-    @XmlElement(name="name")
+    @XmlElement(name = "name")
     public String getName() {
         return name;
     }
@@ -41,7 +42,7 @@ public class BeaconResponseDTO {
         this.name = name;
     }
 
-    @XmlElement(name="exists")
+    @XmlElement(name = "exists")
     public Boolean getExists() {
         return exists;
     }
@@ -50,7 +51,7 @@ public class BeaconResponseDTO {
         this.exists = exists;
     }
 
-    @XmlElement(name="frequency")
+    @XmlElement(name = "frequency")
     public Long getAlleleFreq() {
         return alleleFreq;
     }
@@ -59,5 +60,3 @@ public class BeaconResponseDTO {
         this.alleleFreq = alleleFreq;
     }
 }
-
-
