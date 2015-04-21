@@ -1,0 +1,5 @@
+mywildfly:
+  image: mcupak/beaconizer:latest
+  ports:
+    - 10080:8080
+    - 11990:9990
