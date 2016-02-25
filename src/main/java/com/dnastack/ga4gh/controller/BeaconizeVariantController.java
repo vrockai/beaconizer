@@ -23,7 +23,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("/")
 public class BeaconizeVariantController {
 
-    private static final String API_KEY = "AIzaSyCQsNqWNQgAPmQFk6C9LUMlZ1961gCK7qA";
+    private static final String API_KEY = "";
 
     private static final BeaconizeVariantImpl[] GABeacons = new BeaconizeVariantImpl[]{
         new BeaconizeVariantImpl("platinum", "https://www.googleapis.com/genomics/v1beta2", API_KEY, new String[]{"3049512673186936334"}),
