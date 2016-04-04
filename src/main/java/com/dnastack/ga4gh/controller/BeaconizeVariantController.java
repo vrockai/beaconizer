@@ -1,17 +1,5 @@
 /*
- * Copyright 2016 DNAstack
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Put license here.
  */
 package com.dnastack.ga4gh.controller;
 
@@ -31,27 +19,9 @@ import java.util.ArrayList;
 @Path("/")
 public class BeaconizeVariantController {
 
-    private static final String API_KEY = "";
+    private static final String API_KEY = "AIzaSyB-RQ8ZfJZO1anOfbyZEaIBYRKvEpXm4iw";
 
-    private static final BeaconizeVariantImpl[] GABeacons = new BeaconizeVariantImpl[]{new BeaconizeVariantImpl(
-            "platinum",
-            "https://genomics.googleapis.com/v1",
-            API_KEY,
-            new String[]{"3049512673186936334"}), new BeaconizeVariantImpl("thousandgenomes",
-                                                                           "https://genomics.googleapis.com/v1",
-                                                                           API_KEY,
-                                                                           new String[]{"4252737135923902652"}), new BeaconizeVariantImpl(
-            "thousandgenomes-phase3",
-            "https://genomics.googleapis.com/v1",
-            API_KEY,
-            new String[]{"10473108253681171589"}), new BeaconizeVariantImpl("curoverse",
-                                                                            "http://lightning-dev4.curoverse.com/api",
-                                                                            null,
-                                                                            new String[]{"hu"}), new BeaconizeVariantImpl(
-            "curoverse-ref",
-            "http://lightning-dev4.curoverse.com/apiref",
-            null,
-            new String[]{"1000g_2013"})};
+    private static final BeaconizeVariantImpl[] GABeacons = new BeaconizeVariantImpl[]{new BeaconizeVariantImpl("platinum", "https://www.googleapis.com/genomics/v1beta2", API_KEY, new String[]{"3049512673186936334"}), new BeaconizeVariantImpl("thousandgenomes", "https://www.googleapis.com/genomics/v1beta2", API_KEY, new String[]{"4252737135923902652"}), new BeaconizeVariantImpl("thousandgenomes-phase3", "https://www.googleapis.com/genomics/v1beta2", API_KEY, new String[]{"10473108253681171589"}), new BeaconizeVariantImpl("curoverse", "http://lightning-dev4.curoverse.com/api", null, new String[]{"hu"}), new BeaconizeVariantImpl("curoverse-ref", "http://lightning-dev4.curoverse.com/apiref", null, new String[]{"1000g_2013"})};
 
     /**
      * Returns whether the variant exists in the Variant API Implementation with
@@ -81,9 +51,7 @@ public class BeaconizeVariantController {
                 }
             }
         }
-        return Response.status(Response.Status.NOT_FOUND)
-                       .entity("No Variant API Implementation with the name " + requestedName + " exists in this registry.")
-                       .build();
+        return Response.status(Response.Status.NOT_FOUND).entity("No Variant API Implementation with the name " + requestedName + " exists in this registry.").build();
     }
 
     /**
@@ -103,6 +71,7 @@ public class BeaconizeVariantController {
     public Response findAll(@Context UriInfo uriInfo, @QueryParam("populationId") String populationId, @QueryParam("referenceVersion") String referenceVersion, @QueryParam("chromosome") String chromosome, @QueryParam("coordinate") Long coordinate, @QueryParam("allele") String allele) {
         ArrayList<BeaconResponseDTO> l = new ArrayList<>(GABeacons.length);
         for (BeaconizeVariantImpl gaBeacon : GABeacons) {
+            //localhost:8080/beacon/beacon?chromosome=1&coordinate=10177&allele=AC
             Boolean doesExist = gaBeacon.exists(null, chromosome, coordinate, allele);
             l.add(new BeaconResponseDTO(gaBeacon.getName(), doesExist));
         }

@@ -22,14 +22,8 @@ public class App {
 
         String rootURL = "https://www.googleapis.com/genomics/v1beta";
 
-        GABeacon thousandGenomesBeacon = new BeaconizeVariantImpl("Google",
-                                                                  rootURL,
-                                                                  key,
-                                                                  new String[]{"4252737135923902652"});
-        GABeacon curoverse = new BeaconizeVariantImpl("curoverse",
-                                                      "http://lightning-dev4.curoverse.com/api",
-                                                      null,
-                                                      new String[]{"hu"});
+        GABeacon thousandGenomesBeacon = new BeaconizeVariantImpl("Google", rootURL, key, new String[]{"4252737135923902652"});
+        GABeacon curoverse = new BeaconizeVariantImpl("curoverse", "http://lightning-dev4.curoverse.com/api", null, new String[]{"hu"});
 
         for (GABeacon b : new GABeacon[]{thousandGenomesBeacon, curoverse}) {
             System.out.println(b + " result: " + b.exists(null, "1", 10177, "AC"));

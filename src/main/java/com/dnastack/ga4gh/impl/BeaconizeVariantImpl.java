@@ -1,18 +1,3 @@
-/*
- * Copyright 2016 DNAstack
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.dnastack.ga4gh.impl;
 
 import com.dnastack.ga4gh.api.GABeacon;
@@ -69,6 +54,13 @@ public class BeaconizeVariantImpl implements GABeacon {
     }
 
     /**
+     * @return The name of this API implementation.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
      * Queries the Variant API implementation for variants at the given position
      *
      * @param reference The reference (or chromosome)
@@ -79,6 +71,7 @@ public class BeaconizeVariantImpl implements GABeacon {
      * @throws ParseException Problems parsing response
      */
     private JSONObject submitVariantSearchRequest(String reference, long position, String alt) throws IOException, ParseException {
+
         JSONObject obj = new JSONObject();
 
         JSONArray list = new JSONArray();
@@ -88,6 +81,7 @@ public class BeaconizeVariantImpl implements GABeacon {
         obj.put("referenceName", reference);
         obj.put("start", position);
         obj.put("end", (position + 1));
+        //obj.put("maxCalls", "1");
 
         String json = obj.toJSONString();
 
@@ -149,16 +143,10 @@ public class BeaconizeVariantImpl implements GABeacon {
         return false;
     }
 
-    /**
-     * @return The name of this API implementation.
-     */
-    public String getName() {
-        return this.name;
-    }
-
     @Override
     public Boolean exists(String genome, String reference, long position, String alt) {
         try {
+            // TODO: check inputs!
             JSONObject response = submitVariantSearchRequest(reference, position, alt);
             return parseResponseForMatchWithAlt(response, alt);
         } catch (Exception ex) {
