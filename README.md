@@ -48,8 +48,8 @@ The beacons.json file contains an array of AdapterConfig objects which will be u
     - Each Configvalue has the form of:
         ```json
             { 
-                "name": String,
-                "value":String
+                "name": "String",
+                "value": "String"
             }
         ```
         
@@ -125,14 +125,14 @@ Look up a specific variant in the specified beacon
 ```json
 {
     "referenceName": "String",
-    "start": Long,
+    "start": "Long",
     "referenceBases":"String",
     "alternateBases":"String",
     "assemblyId":"String",
     "datasetids":[
         "String"
     ],
-    "includeDatasetResponses":Boolean
+    "includeDatasetResponses": "Boolean"
 }
 ```
 
