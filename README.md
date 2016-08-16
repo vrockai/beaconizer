@@ -99,6 +99,7 @@ curl -X GET http://localhost:8080/beacons/beacon_id
 ### GET /beacons/:id/query
 
 Look up a specific variant in the specified beacon
+
 **Required Query Params**
 
 * referenceName: [String] chromosome or contig
@@ -120,6 +121,7 @@ curl -X GET 'http://localhost:8080/beacons/beacon_id/query?referenceName=1&start
 ### POST /beacons/:id/query
 
 Look up a specific variant in the specified beacon
+
 **Required Body Json**
 
 ```json
