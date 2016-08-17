@@ -6,3 +6,14 @@ branches:
   only:
     - master
     - develop
+
+before_install:
+  - wget https://github.com/mcupak/beacon-adapter-api/archive/develop.zip -O beacon-adapter-api-develop.zip
+  - wget https://github.com/mcupak/beacon-java/archive/develop.zip -O beacon-java-develop.zip
+  - wget https://github.com/ga4gh/beacon-team/archive/v0.3.0.tar.gz
+  - tar -xzf v0.3.0.tar.gz
+  - unzip beacon-java-develop.zip
+  - unzip beacon-adapter-api-develop.zip
+  - mvn -f beacon-team-0.3.0 clean install
+  - mvn -f beacon-adapter-api-develop/pom.xml clean install
+  - mvn -f beacon-java-develop/pom.xml clean install

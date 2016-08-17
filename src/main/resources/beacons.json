@@ -1,0 +1,7 @@
+[
+  {
+    "name": "beacon_id",
+    "adapterClass": "com.dnastack.beacon.core.adapter.impl.SampleBeaconAdapterImpl",
+    "configValues": []
+  }
+]
