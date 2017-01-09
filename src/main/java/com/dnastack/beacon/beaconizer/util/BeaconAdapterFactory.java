@@ -41,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * instance of each adapter based on the name value passed in the AdapterConfig object
  *
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 @Singleton
 public class BeaconAdapterFactory {

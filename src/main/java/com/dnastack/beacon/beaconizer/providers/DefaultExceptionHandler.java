@@ -36,7 +36,7 @@ import javax.ws.rs.ext.Provider;
  * Default Exception handler to catch all Non Beacon exceptions thrown by the rest resources.z
  *
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 @Provider
 public class DefaultExceptionHandler implements ExceptionMapper<Exception> {

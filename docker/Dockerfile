@@ -4,11 +4,9 @@ MAINTAINER Miro Cupak <mirocupak@gmail.com>
 # prepare wildfly
 ENV JBOSS_HOME /opt/jboss/wildfly
 
-USER root
-
 # install necessary packages
-RUN yes | yum update
-RUN yes | yum install patch wget tree curl zip unzip
+USER root
+RUN yum -y update
 
 # customize wildfly
 USER jboss

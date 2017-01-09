@@ -33,7 +33,7 @@ import java.util.List;
  * to access
  *
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 public interface BeaconizerDao {
 

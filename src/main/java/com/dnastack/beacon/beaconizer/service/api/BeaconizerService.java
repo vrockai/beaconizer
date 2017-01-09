@@ -34,7 +34,7 @@ import java.util.List;
  * BeaconService interface
  *
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 public interface BeaconizerService {
 

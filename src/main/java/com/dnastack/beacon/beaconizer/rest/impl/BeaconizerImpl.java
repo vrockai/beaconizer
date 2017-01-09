@@ -44,7 +44,7 @@ import java.util.List;
  * Beaconizer REST-API implementation
  *
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 @Path("/")
 public class BeaconizerImpl implements Beaconizer {

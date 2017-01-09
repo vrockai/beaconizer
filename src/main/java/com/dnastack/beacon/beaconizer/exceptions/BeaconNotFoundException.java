@@ -28,7 +28,7 @@ import com.dnastack.beacon.utils.Reason;
 
 /**
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 public class BeaconNotFoundException extends BeaconException {
 

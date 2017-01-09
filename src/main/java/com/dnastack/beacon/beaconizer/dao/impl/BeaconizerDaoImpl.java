@@ -47,7 +47,7 @@ import java.util.*;
  * in a json configuration file.
  *
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 @Singleton
 public class BeaconizerDaoImpl implements BeaconizerDao {

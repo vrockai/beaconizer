@@ -34,7 +34,7 @@ import java.util.Map;
  * Mapper of exceptions to status codes.
  *
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 public class ResponseMappingResource {
 

@@ -42,7 +42,7 @@ import java.util.List;
  * BeaconService Implementation
  *
  * @author patmagee
- * @author Miro Cupak </mirocupak@gmail.com>
+ * @author Miro Cupak (mirocupak@gmail.com)
  */
 @Singleton
 public class BeaconizerServiceImpl implements BeaconizerService {
