@@ -41,6 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * instance of each adapter based on the name value passed in the AdapterConfig object
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 @Singleton
 public class BeaconAdapterFactory {
@@ -49,25 +50,6 @@ public class BeaconAdapterFactory {
     BeaconizerDao dao;
 
     Map<String, BeaconAdapter> adapters = new ConcurrentHashMap<>();
-
-    public List<String> listRegisteredBeacons(){
-        return dao.listRegisteredBeacons();
-    }
-
-    /**
-     * Get the adapter for registered to the passed name. If the adapter does not exist, attempt to create it
-     *
-     * @param name name of adapter instance
-     * @return BeaconAdapter instance
-     * @throws BeaconException
-     */
-    public BeaconAdapter getAdapter(@NonNull String name) throws BeaconException {
-        BeaconAdapter adapter = adapters.get(name);
-        if (adapter != null) {
-            return adapter;
-        }
-        return newAdapter(name);
-    }
 
     /**
      * Create a new BeaconAdapter and register it under the passed name
@@ -104,6 +86,25 @@ public class BeaconAdapterFactory {
             exception.setStackTrace(e.getStackTrace());
             throw exception;
         }
+    }
+
+    public List<String> listRegisteredBeacons() {
+        return dao.listRegisteredBeacons();
+    }
+
+    /**
+     * Get the adapter for registered to the passed name. If the adapter does not exist, attempt to create it
+     *
+     * @param name name of adapter instance
+     * @return BeaconAdapter instance
+     * @throws BeaconException
+     */
+    public BeaconAdapter getAdapter(@NonNull String name) throws BeaconException {
+        BeaconAdapter adapter = adapters.get(name);
+        if (adapter != null) {
+            return adapter;
+        }
+        return newAdapter(name);
     }
 
 }

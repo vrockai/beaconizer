@@ -54,10 +54,9 @@ import static org.hamcrest.Matchers.not;
 @RunAsClient
 public class BeaconizerTest extends BaseTest {
 
+    private static BeaconizerDao dao;
     @ArquillianResource
     private URL url;
-
-    private static BeaconizerDao dao;
 
     @BeforeClass
     public static void setUpClass() {
@@ -67,13 +66,12 @@ public class BeaconizerTest extends BaseTest {
     }
 
     private Beacon getBeacon() {
-        return given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .get(url)
-                .then()
-                .extract()
-                .as(Beacon[].class, ObjectMapperType.GSON)[0];
+        return given().accept(ContentType.JSON)
+                      .contentType(ContentType.JSON)
+                      .get(url)
+                      .then()
+                      .extract()
+                      .as(Beacon[].class, ObjectMapperType.GSON)[0];
     }
 
     /**
@@ -101,20 +99,18 @@ public class BeaconizerTest extends BaseTest {
         given().accept(ContentType.JSON).put(url).then().assertThat().statusCode(not(200));
     }
 
-
     @Test
     public void testGetBeacons() {
-        Beacon[] beacons = given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .get(url)
-                .then()
-                .assertThat()
-                .statusCode(200)
-                .contentType(ContentType.JSON)
-                .body(not(emptyArray()))
-                .extract()
-                .as(Beacon[].class, ObjectMapperType.GSON);
+        Beacon[] beacons = given().accept(ContentType.JSON)
+                                  .contentType(ContentType.JSON)
+                                  .get(url)
+                                  .then()
+                                  .assertThat()
+                                  .statusCode(200)
+                                  .contentType(ContentType.JSON)
+                                  .body(not(emptyArray()))
+                                  .extract()
+                                  .as(Beacon[].class, ObjectMapperType.GSON);
 
         for (Beacon beacon : beacons) {
             assertThat(beacon).isNotNull();
@@ -154,33 +150,31 @@ public class BeaconizerTest extends BaseTest {
     @Test
     public void testGetBeacon() {
         Beacon beacon = getBeacon();
-        Beacon testBeacon = given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .log()
-                .all()
-                .get(url + beacon.getId())
-                .then()
-                .assertThat()
-                .statusCode(200)
-                .contentType(ContentType.JSON)
-                .extract()
-                .as(Beacon.class, ObjectMapperType.GSON);
+        Beacon testBeacon = given().accept(ContentType.JSON)
+                                   .contentType(ContentType.JSON)
+                                   .log()
+                                   .all()
+                                   .get(url + beacon.getId())
+                                   .then()
+                                   .assertThat()
+                                   .statusCode(200)
+                                   .contentType(ContentType.JSON)
+                                   .extract()
+                                   .as(Beacon.class, ObjectMapperType.GSON);
 
         assertThat(testBeacon).isEqualToComparingFieldByField(beacon);
     }
 
     @Test
     public void testGetBeaconError() {
-        given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .log()
-                .all()
-                .get(url + "INVALID")
-                .then()
-                .assertThat()
-                .statusCode(404);
+        given().accept(ContentType.JSON)
+               .contentType(ContentType.JSON)
+               .log()
+               .all()
+               .get(url + "INVALID")
+               .then()
+               .assertThat()
+               .statusCode(404);
     }
 
     /**
@@ -254,11 +248,7 @@ public class BeaconizerTest extends BaseTest {
     public void testDeleteAlleleNotSupported() throws URISyntaxException {
         Beacon beacon = getBeacon();
         String path = url.toURI().getRawPath().concat(beacon.getId() + "/query");
-        given()
-                .delete(path)
-                .then()
-                .assertThat()
-                .statusCode(not(200));
+        given().delete(path).then().assertThat().statusCode(not(200));
     }
 
     /**
@@ -268,11 +258,7 @@ public class BeaconizerTest extends BaseTest {
     public void testPutAlleleNotSupported() throws URISyntaxException {
         Beacon beacon = getBeacon();
         String path = url.toURI().getRawPath().concat(beacon.getId() + "/query");
-        given()
-                .put(path)
-                .then()
-                .assertThat()
-                .statusCode(not(200));
+        given().put(path).then().assertThat().statusCode(not(200));
     }
 
     /**

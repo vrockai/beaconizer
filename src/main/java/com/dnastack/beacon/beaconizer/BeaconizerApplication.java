@@ -30,6 +30,7 @@ import javax.ws.rs.core.Application;
  * Application entry point
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 @ApplicationPath("/")
 public class BeaconizerApplication extends Application {

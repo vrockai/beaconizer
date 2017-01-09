@@ -47,12 +47,54 @@ import java.util.*;
  * in a json configuration file.
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 @Singleton
 public class BeaconizerDaoImpl implements BeaconizerDao {
 
     private static final String CONFIG_FILE = "beacons.json";
     Map<String, AdapterConfig> beacons;
+
+    /**
+     * Parse the resource file containing the beacon definition and convert it to a json string
+     *
+     * @return JSON string
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    private String resourceParser() throws IOException {
+        ClassLoader cl = getClass().getClassLoader();
+
+        InputStream stream = cl.getResource(CONFIG_FILE).openStream();
+        InputStreamReader reader = new InputStreamReader(stream);
+        BufferedReader br = new BufferedReader(reader);
+
+        String line;
+        String jsonString = "";
+        while ((line = br.readLine()) != null) {
+            jsonString += line;
+        }
+
+        return jsonString;
+    }
+
+    /**
+     * Given a json string, parse the input and convert it to BeaconDTO objects
+     *
+     * @param json json string from resourceParser
+     * @return List of BeaconDTO's
+     */
+    private List<AdapterConfig> parseBeacons(String json) {
+        JsonParser parser = new JsonParser();
+        Gson gson = new GsonBuilder().create();
+        Type type = new TypeToken<List<AdapterConfig>>() {
+
+        }.getType();
+
+        List<AdapterConfig> adapters = gson.fromJson(json, type);
+
+        return adapters;
+    }
 
     /**
      * Initialize the Beacons and load them into memopry from file
@@ -95,45 +137,5 @@ public class BeaconizerDaoImpl implements BeaconizerDao {
     public List<String> listRegisteredBeacons() {
         Set<String> keys = beacons.keySet();
         return new ArrayList<>(keys);
-    }
-
-    /**
-     * Parse the resource file containing the beacon definition and convert it to a json string
-     *
-     * @return JSON string
-     * @throws URISyntaxException
-     * @throws IOException
-     */
-    private String resourceParser() throws URISyntaxException, IOException {
-        ClassLoader cl = getClass().getClassLoader();
-
-        InputStream stream = cl.getResource(CONFIG_FILE).openStream();
-        InputStreamReader reader = new InputStreamReader(stream);
-        BufferedReader br = new BufferedReader(reader);
-
-        String line;
-        String jsonString = "";
-        while ((line = br.readLine()) != null) {
-            jsonString += line;
-        }
-
-        return jsonString;
-    }
-
-    /**
-     * Given a json string, parse the input and convert it to BeaconDTO objects
-     *
-     * @param json json string from resourceParser
-     * @return List of BeaconDTO's
-     */
-    private List<AdapterConfig> parseBeacons(String json) {
-        JsonParser parser = new JsonParser();
-        Gson gson = new GsonBuilder().create();
-        Type type = new TypeToken<List<AdapterConfig>>() {
-        }.getType();
-
-        List<AdapterConfig> adapters = gson.fromJson(json, type);
-
-        return adapters;
     }
 }

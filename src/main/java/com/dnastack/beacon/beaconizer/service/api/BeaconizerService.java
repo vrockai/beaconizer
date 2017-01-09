@@ -34,11 +34,13 @@ import java.util.List;
  * BeaconService interface
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 public interface BeaconizerService {
 
     /**
      * Get a list of all the beacons
+     *
      * @return
      * @throws BeaconException
      */
@@ -51,7 +53,6 @@ public interface BeaconizerService {
      * @return Response Object
      */
     Beacon getBeacon(String name) throws BeaconException;
-
 
     /**
      * Query a single Beacon for the existence of a variant

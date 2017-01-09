@@ -42,6 +42,7 @@ import java.lang.reflect.Type;
  * Gson Message Body Handler for serializing JSON data to and from auto generated Java classes
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)

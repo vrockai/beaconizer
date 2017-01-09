@@ -38,17 +38,47 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * BeaconService Implementation
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 @Singleton
 public class BeaconizerServiceImpl implements BeaconizerService {
 
     @Inject
     BeaconAdapterFactory beaconAdapterFactory;
+
+    /**
+     * Validate the beacon fields according to the 0.3.0 beacon specifications
+     *
+     * @param referenceName
+     * @param start
+     * @param referenceBases
+     * @param alternateBases
+     * @param assemblyId
+     * @throws BeaconException
+     */
+    private void validateRequest(String name, String referenceName, Long start, String referenceBases, String alternateBases, String assemblyId, List<String> datasetIds, Boolean includeDatasetResponses) throws BeaconAlleleRequestException {
+        if (referenceName == null) {
+            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST,
+                                                   "Reference cannot be null. Please provide an appropriate reference name");
+        } else if (start == null) {
+            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST,
+                                                   "Start position cannot be null. Please provide a 0-based start position");
+        } else if (referenceBases == null) {
+            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST, "Reference bases cannot be null");
+        } else if (alternateBases == null) {
+            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST, "Alternate bases cannot be null");
+        } else if (assemblyId == null) {
+            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST,
+                                                   "AssemblyId cannot be null. Please defined a valid GRCh assembly Id");
+        } else if (datasetIds == null || datasetIds.size() == 0) {
+            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST,
+                                                   "Missing DatasetId. At least 1 dataset id must be provided");
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -79,9 +109,21 @@ public class BeaconizerServiceImpl implements BeaconizerService {
     @Override
     public BeaconAlleleResponse getBeaconAlleleResponse(String name, String referenceName, Long start, String referenceBases, String alternateBases, String assemblyId, List<String> datasetIds, Boolean includeDatasetResponses) throws BeaconException {
         BeaconAdapter adapter = beaconAdapterFactory.getAdapter(name);
-        validateRequest(name, referenceName, start, referenceBases, alternateBases, assemblyId, datasetIds, includeDatasetResponses);
-        return adapter
-                .getBeaconAlleleResponse(referenceName, start, referenceBases, alternateBases, assemblyId, datasetIds, includeDatasetResponses);
+        validateRequest(name,
+                        referenceName,
+                        start,
+                        referenceBases,
+                        alternateBases,
+                        assemblyId,
+                        datasetIds,
+                        includeDatasetResponses);
+        return adapter.getBeaconAlleleResponse(referenceName,
+                                               start,
+                                               referenceBases,
+                                               alternateBases,
+                                               assemblyId,
+                                               datasetIds,
+                                               includeDatasetResponses);
     }
 
     /**
@@ -90,37 +132,15 @@ public class BeaconizerServiceImpl implements BeaconizerService {
     @Override
     public BeaconAlleleResponse getBeaconAlleleResponse(String name, BeaconAlleleRequest request) throws BeaconException {
         BeaconAdapter adapter = beaconAdapterFactory.getAdapter(name);
-        validateRequest(name, request.getReferenceName(), request.getStart(), request.getReferenceBases(), request.getAlternateBases(), request
-                .getAssemblyId(), request.getDatasetIds(), request.getIncludeDatasetResponses());
+        validateRequest(name,
+                        request.getReferenceName(),
+                        request.getStart(),
+                        request.getReferenceBases(),
+                        request.getAlternateBases(),
+                        request.getAssemblyId(),
+                        request.getDatasetIds(),
+                        request.getIncludeDatasetResponses());
         return adapter.getBeaconAlleleResponse(request);
     }
-
-
-    /**
-     * Validate the beacon fields according to the 0.3.0 beacon specifications
-     *
-     * @param referenceName
-     * @param start
-     * @param referenceBases
-     * @param alternateBases
-     * @param assemblyId
-     * @throws BeaconException
-     */
-    private void validateRequest(String name, String referenceName, Long start, String referenceBases, String alternateBases, String assemblyId, List<String> datasetIds, Boolean includeDatasetResponses) throws BeaconAlleleRequestException {
-        if (referenceName == null) {
-            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST, "Reference cannot be null. Please provide an appropriate reference name");
-        } else if (start == null) {
-            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST, "Start position cannot be null. Please provide a 0-based start position");
-        } else if (referenceBases == null) {
-            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST, "Reference bases cannot be null");
-        } else if (alternateBases == null) {
-            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST, "Alternate bases cannot be null");
-        } else if (assemblyId == null) {
-            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST, "AssemblyId cannot be null. Please defined a valid GRCh assembly Id");
-        } else if (datasetIds == null || datasetIds.size() == 0) {
-            throw new BeaconAlleleRequestException(Reason.INVALID_REQUEST, "Missing DatasetId. At least 1 dataset id must be provided");
-        }
-    }
-
 
 }

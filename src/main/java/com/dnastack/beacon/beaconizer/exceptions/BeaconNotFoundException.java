@@ -28,10 +28,11 @@ import com.dnastack.beacon.utils.Reason;
 
 /**
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 public class BeaconNotFoundException extends BeaconException {
 
     public BeaconNotFoundException(String msg) {
-        super(Reason.ERROR,msg);
+        super(Reason.ERROR, msg);
     }
 }

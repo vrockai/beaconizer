@@ -23,20 +23,20 @@
  */
 package com.dnastack.beacon.beaconizer.providers;
 
-import org.ga4gh.beacon.BeaconError;
-import org.json.simple.JSONObject;
 import com.dnastack.beacon.beaconizer.util.ResponseMappingResource;
+import org.ga4gh.beacon.BeaconError;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-
 
 /**
  * Default Exception handler to catch all Non Beacon exceptions thrown by the rest resources.z
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 @Provider
 public class DefaultExceptionHandler implements ExceptionMapper<Exception> {
@@ -50,8 +50,7 @@ public class DefaultExceptionHandler implements ExceptionMapper<Exception> {
      */
     @Override
     public Response toResponse(Exception e) {
-        JSONObject json = new JSONObject();
-        Response.Status s = ResponseMappingResource.getStatus(e);
+        Status s = ResponseMappingResource.getStatus(e);
 
         BeaconError error = new BeaconError();
         error.setMessage(e.getMessage());

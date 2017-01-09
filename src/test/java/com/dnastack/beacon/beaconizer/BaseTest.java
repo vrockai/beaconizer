@@ -37,6 +37,15 @@ import org.junit.runner.Description;
  */
 public abstract class BaseTest {
 
+    @Rule
+    public TestRule watcher = new TestWatcher() {
+
+        @Override
+        protected void starting(Description description) {
+            System.out.println("Starting test: " + description.getClassName() + " - " + description.getMethodName() + "()");
+        }
+    };
+
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         WebArchive war = ShrinkWrap.create(MavenImporter.class)
@@ -46,15 +55,5 @@ public abstract class BaseTest {
         System.out.println("WAR name: " + war.getName());
         return war;
     }
-
-
-    @Rule
-    public TestRule watcher = new TestWatcher() {
-
-        @Override
-        protected void starting(Description description) {
-            System.out.println("Starting test: " + description.getClassName() + " - " + description.getMethodName() + "()");
-        }
-    };
 
 }

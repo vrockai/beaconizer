@@ -37,12 +37,14 @@ import org.ga4gh.beacon.BeaconError;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import java.util.List;
 
 /**
  * Beaconizer REST-API implementation
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 @Path("/")
 public class BeaconizerImpl implements Beaconizer {
@@ -51,55 +53,6 @@ public class BeaconizerImpl implements Beaconizer {
     BeaconizerService beaconizerService;
 
     private Gson gson = new GsonBuilder().create();
-
-
-    public Response getBeacons() {
-        try {
-            return Response.ok(beaconizerService.getBeacons()).build();
-
-        } catch (BeaconException e) {
-            return formBeaconError(null, e);
-        }
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Response getBeacon(String name) {
-        try {
-            return Response.ok(beaconizerService.getBeacon(name)).build();
-        } catch (BeaconException e) {
-            return formBeaconError(name, e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Response getBeaconResponse(String name, String referenceName, Long start, String referenceBases, String alternateBases, String assemblyId, List<String> datasetIds, Boolean includeDatasetResponses) {
-        try {
-            return Response
-                    .ok(beaconizerService.getBeaconAlleleResponse(name, referenceName, start, referenceBases, alternateBases, assemblyId, datasetIds, includeDatasetResponses))
-                    .build();
-        } catch (BeaconException e) {
-            return formBeaconError(name, e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Response getBeaconResponse(String name, BeaconAlleleRequest request) {
-        try {
-            return Response.ok(beaconizerService.getBeaconAlleleResponse(name, request)).build();
-        } catch (BeaconException e) {
-            return formBeaconError(name, e);
-        }
-    }
 
     /**
      * Given a passed BeaconException, form a new beaconError object and return it wrapped in a response object
@@ -114,15 +67,15 @@ public class BeaconizerImpl implements Beaconizer {
         System.out.println(error.getMessage());
 
         if (exception instanceof BeaconNotFoundException) {
-            error.setErrorCode(Response.Status.NOT_FOUND.getStatusCode());
+            error.setErrorCode(Status.NOT_FOUND.getStatusCode());
         } else {
 
             switch (exception.getReason()) {
                 case INVALID_REQUEST:
-                    error.setErrorCode(Response.Status.BAD_REQUEST.getStatusCode());
+                    error.setErrorCode(Status.BAD_REQUEST.getStatusCode());
                     break;
                 default:
-                    error.setErrorCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+                    error.setErrorCode(Status.INTERNAL_SERVER_ERROR.getStatusCode());
             }
         }
 
@@ -142,10 +95,60 @@ public class BeaconizerImpl implements Beaconizer {
             }
 
             return Response.status(error.getErrorCode()).entity(response).build();
-
         } else {
-            BeaconError response = error;
             return Response.status(error.getErrorCode()).entity(error).build();
+        }
+    }
+
+    public Response getBeacons() {
+        try {
+            return Response.ok(beaconizerService.getBeacons()).build();
+
+        } catch (BeaconException e) {
+            return formBeaconError(null, e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Response getBeacon(String name) {
+        try {
+            return Response.ok(beaconizerService.getBeacon(name)).build();
+        } catch (BeaconException e) {
+            return formBeaconError(name, e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Response getBeaconResponse(String name, String referenceName, Long start, String referenceBases, String alternateBases, String assemblyId, List<String> datasetIds, Boolean includeDatasetResponses) {
+        try {
+            return Response.ok(beaconizerService.getBeaconAlleleResponse(name,
+                                                                         referenceName,
+                                                                         start,
+                                                                         referenceBases,
+                                                                         alternateBases,
+                                                                         assemblyId,
+                                                                         datasetIds,
+                                                                         includeDatasetResponses)).build();
+        } catch (BeaconException e) {
+            return formBeaconError(name, e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Response getBeaconResponse(String name, BeaconAlleleRequest request) {
+        try {
+            return Response.ok(beaconizerService.getBeaconAlleleResponse(name, request)).build();
+        } catch (BeaconException e) {
+            return formBeaconError(name, e);
         }
     }
 

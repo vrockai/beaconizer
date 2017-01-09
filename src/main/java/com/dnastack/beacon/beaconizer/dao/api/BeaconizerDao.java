@@ -33,20 +33,22 @@ import java.util.List;
  * to access
  *
  * @author patmagee
+ * @author Miro Cupak </mirocupak@gmail.com>
  */
 public interface BeaconizerDao {
 
     /**
      * Find a named beacon resource and return a new BeaconRequester object wrapping the resource
+     *
      * @param name name of beacon
      * @return BeaconRequest object
      * @throws BeaconNotFoundException
      */
     AdapterConfig find(String name) throws BeaconNotFoundException;
 
-
     /**
      * List all the currently registered beacons
+     *
      * @return list of beacon names
      */
     List<String> listRegisteredBeacons();
