@@ -23,8 +23,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 
 /**
@@ -54,30 +52,6 @@ public class BeaconizeVariantController {
             "http://lightning-dev4.curoverse.com/apiref",
             null,
             new String[]{"1000g_2013"})};
-
-    public BeaconizeVariantController() {
-        // Solution for authenticated proxy from
-        // https://rolandtapken.de/blog/2012-04/java-process-httpproxyuser-and-httpproxypassword
-        Authenticator.setDefault(new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                if (getRequestorType() == RequestorType.PROXY) {
-                    String protocol = getRequestingProtocol().toLowerCase();
-                    String host = System.getProperty(protocol + ".proxyHost", "");
-                    String port = System.getProperty(protocol + ".proxyPort", "");
-                    String user = System.getProperty(protocol + ".proxyUser", "");
-                    String password = System.getProperty(protocol + ".proxyPassword", "");
-
-                    if (getRequestingHost().toLowerCase().equals(host.toLowerCase())) {
-                        if (Integer.parseInt(port) == getRequestingPort()) {
-                            return new PasswordAuthentication(user, password.toCharArray());
-                        }
-                    }
-                }
-                return null;
-            }
-        });
-    }
 
     /**
      * Returns whether the variant exists in the Variant API Implementation with
